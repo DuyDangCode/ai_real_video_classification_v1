@@ -105,6 +105,6 @@ def predict(path, model, labelProcessor):
     result = model.predict([framesFeatures, frameMask])[0]
     for i in np.argsort(result)[::-1]:
         print(f"{classVocab[i]}: {result[i] * 100:5.2f}%")
-    if result[0] > result[1]:
-        return classVocab[0]
-    return classVocab[1]
+    # if result[0] > result[1]:
+    #     return classVocab
+    return result

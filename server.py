@@ -1,9 +1,10 @@
 import os
 from flask import Flask, request, jsonify
 from utils import loadCheckPoint, predict, createLabelProcessor, createModel
-
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
 ALLOWED_FILE_TYPES = ["avi", "mp4"]
 
 
@@ -33,7 +34,7 @@ def predict_route():
         video.save(str(filename))
         result = predict(str(filename), model, labelProcessor)
         os.remove(str(filename))
-        return jsonify({"result": result})
+        return jsonify({"real": str(result[0]), "ai": str(result[1])})
     except Exception as e:
         print(e)
         return "Something went wrong!"
